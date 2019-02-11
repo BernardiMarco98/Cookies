@@ -4,9 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Disney Cookies</title>
 </head>
 <body>
+<h1>Qui puoi vedere i tuoi cookies!</h1>
 
+${cookie1}:${cookie1value}<br>
+${cookie2}:${cookie2value}<br>
+<body style="background-color: blue">
 </body>
 </html>
