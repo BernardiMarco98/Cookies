@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,31 +34,22 @@ public class Pippo extends HttpServlet {
 
 		Cookie userCookies[] = request.getCookies();
 		Cookie cookiePippo = getCookie(userCookies, "Pippo");
-		ArrayList<Cookie> cookiesList = new ArrayList<Cookie>();
 		
+		request.setAttribute("color", "brown");
 		//se il cookie Pluto non esiste, setto Pluto e Disney e li aggiungo all'arraylist
 		if (cookiePippo == null) {
 			Cookie Pippo = new Cookie("Pippo", "CookieDiPippo");
 			Pippo.setPath("/Cookies/Pippo");
 			Pippo.setMaxAge(300);
 			response.addCookie(Pippo);
-			cookiesList.add(Pippo);
 
 			Cookie Disney = new Cookie("Disney", "CookieDisney");
 			Disney.setPath("/Cookies");
 			Disney.setMaxAge(300);
 			response.addCookie(Disney);
-			cookiesList.add(Disney);
-
-			request.setAttribute("arraylist", cookiesList);
-		} else {// altrimenti, scorro tutto l'array dei cookies e aggiungo tutti i
-				// cookies(tranne JSESSIONID) all'arraylist
-			for (int i = 0; i < userCookies.length; i++) {
-				if (!userCookies[i].getName().equals("JSESSIONID"))
-					cookiesList.add(userCookies[i]);
-			}
-			request.setAttribute("arraylist", cookiesList);
+	
 		}
+		request.setAttribute("arraylist", userCookies);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayCookies.jsp");
 		dispatcher.forward(request, response);
 	}
