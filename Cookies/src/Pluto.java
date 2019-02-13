@@ -1,6 +1,6 @@
 
-
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,44 +26,58 @@ public class Pluto extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
 		Cookie userCookies[] = request.getCookies();
+		Cookie cookiePluto = getCookie(userCookies, "Pluto");
+		ArrayList<Cookie> cookiesList = new ArrayList<Cookie>();
 
-		Cookie Pluto = new Cookie("Pluto", "CookieDiPluto");
-		Pluto.setDomain("/cookies/pluto");
-		Pluto.setMaxAge(300);
-		Cookie Disney = new Cookie("Disney", "CookieDisney");
-		Disney.setDomain("/cookies");
-		Disney.setMaxAge(300);
-		response.addCookie(Pluto);
-		response.addCookie(Disney);
+		//se il cookie Pluto non esiste, setto Pluto e Disney e li aggiungo all'arraylist
+		if (cookiePluto == null) {
+			Cookie Pluto = new Cookie("Pluto", "CookieDiPluto");
+			Pluto.setPath("/Cookies/Pluto");
+			Pluto.setMaxAge(300);
+			response.addCookie(Pluto);
+			cookiesList.add(Pluto);
 
-		if(userCookies != null) {
-		request.setAttribute("cookie1", getCookie(userCookies, "/cookies/pluto").getName());
-		request.setAttribute("cookie1value", getCookie(userCookies, "/cookies/pluto").getValue());
-		request.setAttribute("cookie2", getCookie(userCookies, "/cookies").getName());
-		request.setAttribute("cookie2value", getCookie(userCookies, "/cookies").getValue());
+			Cookie Disney = new Cookie("Disney", "CookieDisney");
+			Disney.setPath("/Cookies");
+			Disney.setMaxAge(300);
+			response.addCookie(Disney);
+			cookiesList.add(Disney);
+
+			request.setAttribute("arraylist", cookiesList);
+		} else {// altrimenti, scorro tutto l'array dei cookies e aggiungo tutti i
+				// cookies(tranne JSESSIONID) all'arraylist
+			for (int i = 0; i < userCookies.length; i++) {
+				if (!userCookies[i].getName().equals("JSESSIONID"))
+					cookiesList.add(userCookies[i]);
+			}
+			request.setAttribute("arraylist", cookiesList);
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayCookies.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
-	public Cookie getCookie(Cookie cookies[], String domain) {
+	public Cookie getCookie(Cookie cookies[], String Name) {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getDomain().equals(domain)) {
+				if (cookie.getName().equals(Name)) {
 					return cookie;
 				}
 			}
