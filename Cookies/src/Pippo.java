@@ -9,29 +9,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet implementation class Pippo
  */
 @WebServlet("/Pippo")
 public class Pippo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+	private Logger logger = null;
+	
 	public Pippo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
+	public void init()
+	{
+		logger = Logger.getRootLogger();
+	}
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		
+		logger.trace("logging Trace message");
+		logger.debug("logging DEBUG message");
+		logger.info("logging INFO message");
+		logger.warn("logging WARN message");
+		logger.error("logging ERROR message");
+		logger.fatal("logging FATAL message");
+		
 		Cookie userCookies[] = request.getCookies();
 		Cookie cookiePippo = getCookie(userCookies, "Pippo");
 		
