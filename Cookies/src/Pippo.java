@@ -54,11 +54,12 @@ public class Pippo extends HttpServlet {
 	
 		}
 		if(userCookies != null) {
-			String debugMessage = null;
 			for(int i = 0; i < userCookies.length; i++) {
-				debugMessage = "Pippo -> "+userCookies[i].getName()+":"+userCookies[i].getValue();
-				logger.debug(debugMessage);
+				logger.debug("Pippo -> "+userCookies[i].getName()+":"+userCookies[i].getValue());
 			}
+		}
+		else {
+			logger.error("ERROR: Nessun Cookie presente");
 		}
 		
 	

@@ -52,12 +52,14 @@ public class Pluto extends HttpServlet {
 			response.addCookie(Disney);
 		}
 		if(userCookies != null) {
-			String debugMessage = null;
 			for(int i = 0; i < userCookies.length; i++) {
-				debugMessage = "Pluto -> "+userCookies[i].getName()+":"+userCookies[i].getValue();
-				logger.debug(debugMessage);
+				logger.debug("Pippo -> "+userCookies[i].getName()+":"+userCookies[i].getValue());
 			}
 		}
+		else {
+			logger.error("ERROR: Nessun Cookie presente");
+		}
+		
 
 		request.setAttribute("arraylist", userCookies);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayCookies.jsp");
