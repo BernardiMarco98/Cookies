@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+
 /**
  * Servlet implementation class Pippo
  */
@@ -34,12 +35,6 @@ public class Pippo extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		logger.trace("logging Trace message");
-		logger.debug("logging DEBUG message");
-		logger.info("logging INFO message");
-		logger.warn("logging WARN message");
-		logger.error("logging ERROR message");
-		logger.fatal("logging FATAL message");
 		
 		Cookie userCookies[] = request.getCookies();
 		Cookie cookiePippo = getCookie(userCookies, "Pippo");
@@ -58,6 +53,15 @@ public class Pippo extends HttpServlet {
 			response.addCookie(Disney);
 	
 		}
+		if(userCookies != null) {
+			String debugMessage = null;
+			for(int i = 0; i < userCookies.length; i++) {
+				debugMessage = "Pippo -> "+userCookies[i].getName()+":"+userCookies[i].getValue();
+				logger.debug(debugMessage);
+			}
+		}
+		
+	
 		request.setAttribute("arraylist", userCookies);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayCookies.jsp");
 		dispatcher.forward(request, response);

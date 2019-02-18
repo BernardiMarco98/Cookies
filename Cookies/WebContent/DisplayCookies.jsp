@@ -8,7 +8,7 @@
 <title>Disney Cookies</title>
 </head>
 <body>
-<body style="background-color: ${color}">
+<body style ="background-color:${color};">
 
 <h1>Qui puoi vedere i tuoi cookies!</h1>
 <p>Per visualizzare i cookies di Pippo:

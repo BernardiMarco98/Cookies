@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.log4j.*;
 
 /**
  * Servlet implementation class Pluto
@@ -28,21 +28,16 @@ public class Pluto extends HttpServlet {
 	{
 		logger = Logger.getRootLogger();
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		logger.trace("logging Trace message");
-		logger.debug("logging DEBUG message");
-		logger.info("logging INFO message");
-		logger.warn("logging WARN message");
-		logger.error("logging ERROR message");
-		logger.fatal("logging FATAL message");
-		
+
+
 		Cookie userCookies[] = request.getCookies();
 		Cookie cookiePluto = getCookie(userCookies, "Pluto");
-		
+
 		request.setAttribute("color", "yellow");
 		//se il cookie Pluto non esiste, setto Pluto e Disney e li aggiungo all'arraylist
 		if (cookiePluto == null) {
@@ -56,6 +51,14 @@ public class Pluto extends HttpServlet {
 			Disney.setMaxAge(300);
 			response.addCookie(Disney);
 		}
+		if(userCookies != null) {
+			String debugMessage = null;
+			for(int i = 0; i < userCookies.length; i++) {
+				debugMessage = "Pluto -> "+userCookies[i].getName()+":"+userCookies[i].getValue();
+				logger.debug(debugMessage);
+			}
+		}
+
 		request.setAttribute("arraylist", userCookies);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayCookies.jsp");
 		dispatcher.forward(request, response);
