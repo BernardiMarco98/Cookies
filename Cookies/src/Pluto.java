@@ -27,6 +27,20 @@ public class Pluto extends HttpServlet {
 	public void init()
 	{
 		logger = Logger.getRootLogger();
+		PatternLayout layout = new PatternLayout("%d{ABSOLUTE} %5p %c:%L - %m%n");
+		logger.addAppender(new ConsoleAppender(layout));
+		
+	
+		RollingFileAppender appender;
+		try {
+			appender = new RollingFileAppender(layout,"/home/marco/Desktop/servletRuntime.log");
+			appender.setMaxFileSize("10MB");
+			logger.addAppender(appender);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,7 +67,7 @@ public class Pluto extends HttpServlet {
 		}
 		if(userCookies != null) {
 			for(int i = 0; i < userCookies.length; i++) {
-				logger.debug("Pippo -> "+userCookies[i].getName()+":"+userCookies[i].getValue());
+				logger.debug("Pluto -> "+userCookies[i].getName()+":"+userCookies[i].getValue());
 			}
 		}
 		else {
