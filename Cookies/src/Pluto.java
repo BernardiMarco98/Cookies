@@ -27,6 +27,7 @@ public class Pluto extends HttpServlet {
 	public void init()
 	{
 		logger = Logger.getRootLogger();
+		logger.info("INFO: Servlet Pluto initialized");
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,6 +42,7 @@ public class Pluto extends HttpServlet {
 		request.setAttribute("color", "yellow");
 		//se il cookie Pluto non esiste, setto Pluto e Disney e li aggiungo all'arraylist
 		if (cookiePluto == null) {
+			logger.trace("TRACE: setting cookies...");
 			Cookie Pluto = new Cookie("Pluto", "CookieDiPluto");
 			Pluto.setPath("/Cookies/Pluto");
 			Pluto.setMaxAge(300);
@@ -57,7 +59,7 @@ public class Pluto extends HttpServlet {
 			}
 		}
 		else {
-			logger.error("ERROR: Nessun Cookie presente");
+			logger.warn("WARN: Nessun Cookie presente");
 		}
 		
 

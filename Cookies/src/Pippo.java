@@ -28,6 +28,7 @@ public class Pippo extends HttpServlet {
 	public void init()
 	{
 		logger = Logger.getRootLogger();
+		logger.info("INFO: Servlet Pippo initialized");
 	}
 	
 	
@@ -42,6 +43,7 @@ public class Pippo extends HttpServlet {
 		request.setAttribute("color", "brown");
 		//se il cookie Pluto non esiste, setto Pluto e Disney e li aggiungo all'arraylist
 		if (cookiePippo == null) {
+			logger.trace("TRACE: setting cookies...");
 			Cookie Pippo = new Cookie("Pippo", "CookieDiPippo");
 			Pippo.setPath("/Cookies/Pippo");
 			Pippo.setMaxAge(300);
@@ -59,7 +61,7 @@ public class Pippo extends HttpServlet {
 			}
 		}
 		else {
-			logger.error("ERROR: Nessun Cookie presente");
+			logger.warn("WARN: Nessun Cookie presente");
 		}
 		
 	
